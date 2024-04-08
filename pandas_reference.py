@@ -1,4 +1,4 @@
-# Thanks for StackOverflow for their 2024 survey data
+# Thanks to StackOverflow for their 2024 survey data
 
 import pandas as pd
 
@@ -569,3 +569,112 @@ df.drop(index=df[filt].index)
 # 89183	I agree	I am a developer by profession	Under 18 years old	Employed, part-time;Student, part-time	Hybrid (some remote, some in-person)	Hobby;School or academic work	Secondary school (e.g. American high school, G...	Online Courses or Certification;Other online r...	Formal documentation provided by the owner of ...	Udemy	3	NaN	System administrator	NaN	NaN	Investigate	Ask developers I know/work with;Visit develope...	Switzerland	NaN	NaN	Bash/Shell (all shells);C#;HTML/CSS;Java;JavaS...	Bash/Shell (all shells);HTML/CSS;JavaScript;Po...	MariaDB;Microsoft SQL Server;MongoDB;MySQL;Red...	Cassandra;Cosmos DB;Dynamodb;MariaDB;Microsoft...	Amazon Web Services (AWS);Cloudflare;Google Cl...	Amazon Web Services (AWS);Cloudflare;Digital O...	Express;Next.js;Node.js;React;WordPress	Angular;AngularJS;Express;Next.js;Node.js;Reac...	CUDA;NumPy;Torch/PyTorch	CUDA;Flutter;NumPy;TensorFlow;Torch/PyTorch	Docker;Kubernetes;npm;Podman;Vite	Ansible;APT;Docker;Kubernetes;npm;Pip;Podman;T...	Eclipse;IntelliJ IDEA;Nano;Notepad++;PyCharm;V...	Jupyter Notebook/JupyterLab;Notepad++;Visual S...	Arch;Debian;iOS;iPadOS;MacOS;Ubuntu;Windows;Wi...	BSD;Red Hat;Solaris;Ubuntu;Windows	Confluence;Jira;Trello	Azure Devops;Confluence;Jira	Cisco Webex Teams;Discord;Microsoft Teams;Sign...	Discord;Microsoft Teams;Skype	Bing AI;ChatGPT;WolframAlpha	Bing AI;ChatGPT;Google Bard AI	NaN	NaN	Stack Overflow;Stack Exchange;Stack Overflow f...	A few times per month or weekly	No	NaN	Yes, somewhat	Define Parameters more detailed. I believe in ...	Yes	Favorable	Increase productivity;Greater efficiency;Speed...	Somewhat distrust	Learning about a codebase;Project planning;Wri...	Learning about a codebase;Writing code;Debuggi...	Committing and reviewing code	NaN	Debugging and getting help;Deployment and moni...	NaN	NaN	Learning about a codebase;Writing code	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	NaN	Appropriate in length	Neither easy nor difficult	NaN
 # 89184	I agree	I am a developer by profession	35-44 years old	Employed, full-time	Hybrid (some remote, some in-person)	Hobby;Professional development or self-paced l...	Bachelor’s degree (B.A., B.S., B.Eng., etc.)	Colleague;Online Courses or Certification;Othe...	Formal documentation provided by the owner of ...	Codecademy;Pluralsight;Coursera	17	12	Developer, full-stack	100 to 499 employees	I have some influence	NaN	Start a free trial;Ask developers I know/work ...	Iran, Islamic Republic of...	IRR\tIranian rial	3.300000e+09	C#;Go;JavaScript;SQL;TypeScript	C#;Go;JavaScript;SQL;TypeScript	Microsoft SQL Server;Redis;SQLite	Microsoft SQL Server;Redis;SQLite	Hetzner	Hetzner;Microsoft Azure	Angular;ASP.NET;ASP.NET CORE;Blazor;Node.js	Angular;ASP.NET;ASP.NET CORE;Blazor;Deno;Node....	.NET (5+) ;.NET Framework (1.0 - 4.8)	.NET (5+) ;Apache Kafka;RabbitMQ;Tauri	Docker;npm;NuGet;pnpm;Vite;Webpack;Yarn	Bun;Docker;npm;NuGet;pnpm;Vite;Yarn	Visual Studio;Visual Studio Code	Visual Studio;Visual Studio Code	Windows	Windows	NaN	NaN	Google Meet;Skype;Telegram;Whatsapp	Google Meet;Skype;Telegram;Whatsapp	ChatGPT	ChatGPT	GitHub Copilot	GitHub Copilot	Stack Overflow	A few times per week	Yes	Less than once per month or monthly	Yes, somewhat	NaN	Yes	Favorable	Increase productivity;Greater efficiency;Speed...	Neither trust nor distrust	Learning about a codebase;Writing code	Learning about a codebase;Writing code	NaN	Learning about a codebase	NaN	NaN	NaN	Writing code	Yes	People manager	14.0	Agree	Neither agree nor disagree	Neither agree nor disagree	Strongly agree	Strongly agree	Agree	Neither agree nor disagree	Neither agree nor disagree	Never	1-2 times a week	1-2 times a week	60-120 minutes a day	30-60 minutes a day	DevOps function;Developer portal or other cent...	Information Services, IT, Software Development...	Appropriate in length	Easy	NaN
 # 37076 rows × 83 columns
+
+
+
+# ==========================
+# More basic functions
+# ==========================
+
+# Sorting values
+# --------------
+
+# Basic sorting can be done with sort_values
+df.sort_values(by="Col Name Here", ascending=False)
+
+# You can also pass in multiple column names as a list - in this case, Last Name will be the primary sort
+df.sort_values(by=["Last Name","First Name"], ascending=False)
+
+# You can also pass in multiple values to ascending= - in this case, Last Name would be in descending order, First Name would be in ascending order
+df.sort_values(by=["Last Name","First Name"], ascending=[False, True])
+
+# You can make any sorting permanent by adding inplace=True
+df.sort_values(by="Col Name Here", ascending=False, inplace=True)
+
+# Or reset the sort by sorting by index again
+df.sort_index()
+
+# You can also sort individual column results instead of the whole table
+df['Last Name'].sort_values()
+
+
+# Min and Max values
+# ------------------
+
+# You can use .nlargest() method to return the largest values from a column in the dataset
+df["ConvertedCompYearly"].nlargest(10)
+
+# This would give the full table info for the largest 10 results in ConvertedCompYearly
+df.nlargest(10, "ConvertedCompYearly")
+
+# The .nsmallest() method can be used to find the min values
+df["ConvertedCompYearly"].nsmallest(10)
+
+
+# Mean, Mode and Median
+# ----------------------
+
+# Get the Mean value of a specific column's values
+df["ConvertedCompYearly"].mean()
+
+# Get the Mode value of a specific column's values
+df["ConvertedCompYearly"].mode()
+
+# Get the Median value of a specific column's values
+df["ConvertedCompYearly"].median()
+
+# You can also run .median() on the full dataset to get values of all applicable columns
+df.median()
+
+
+# Describe
+# ---------
+
+# You can use the .describe() method to get a range of useful information, including count, mean, standard deviation, min, 25% quartile, 50% quartile, 75% quartile and max values of all relevant rows 
+df.describe()
+
+# You can run the .describe() method on a single column too
+df["ConvertedCompYearly"].describe()
+
+
+# Counts and Value Counts
+# -----------------------
+
+# You can use the .count() method to return how many values exist in that column (i.e. non NaN / missing values)
+df["ConvertedCompYearly"].count()
+
+# If you want to see how many respondents answered which answer, you can create a table that summarises this info by running .value_counts()
+df["Hobbyist"].value_counts()
+## Yes - 20900
+## No - 10110
+## NaN - 11024
+
+
+# Group By
+# --------
+# Note: the Pandas documentation explains that the Group By function includes three steps:
+# Split -> Apply Function -> Combine Results
+
+# Part 1 - Split
+
+# .groupby() will create a pandas groupby object, which will group the results into groups that share a country
+country_group = df.groupby(["Country"])
+# Then running .get_group() will return only the results where the values include United States
+country_group.get_group("United States")
+
+# Part 2 - Apply function and get results
+
+# This would be a way to get most popular social media platforms by country - sorted by country as a primary index and social media as the secondary index
+country_group['SocialMedia'].value_counts()
+
+# This would show median yearly compensation values per country
+country_group['ConvertedCompYearly'].median()
+# We can also use .loc() method to find a specific named index (i.e. named country)
+country_group['ConvertedCompYearly'].median().loc('Germany')
+
+# We can run more than one function on the data running the .agg() method
+country_group['ConvertedCompYearly'].agg(['median', 'mean']).loc['Canada']
+## median 1513512.000
+## mean 124125.124
+
+
